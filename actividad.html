@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GMET Challenge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #fff0f6 0%, #fbcfe8 100%);
+            --primary: #a6427d; /* GMET oscuro */
+            --primary-dark: #831843;
+            --secondary: #df7ab3; /* GMET claro */
+            --secondary-dark: #be185d;
+            --text: #4a1d37;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --success: #10b981;
+            --success-dark: #047857;
+            --error: #f43f5e;
+            --error-dark: #be123c;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #app {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            padding-top: 11rem; /* Margen para asegurar que el contenido no pise al logo */
+            text-align: center;
+            position: relative;
+        }
+
+        /* Contenedores de vista centran todo su contenido */
+        #view-start, #view-game, #view-result {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Logo Fijo Arriba */
+        .header-logo {
+            position: absolute;
+            top: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+        
+        .header-logo img {
+            height: 150px; /* Tamaño mucho más grande */
+            width: auto;
+            /* Como no tiene fondo, este sombreado ahora recorta la silueta exacta del texto y la lupa */
+            filter: drop-shadow(0 10px 15px rgba(166, 66, 125, 0.3));
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text);
+            opacity: 0.9;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.5;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            padding: 2.5rem 2.5rem;
+            margin: 1rem 0;
+            /* Tamaño 100% fijo: nunca cambia, sin importar el contenido */
+            width: min(600px, 100%);
+            height: 260px;
+            box-shadow: 0 20px 40px rgba(166, 66, 125, 0.1), inset 0 0 0 1px rgba(255,255,255,0.5);
+            backdrop-filter: blur(10px);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            /* Centra el contenido verticalmente */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .card.correct {
+            background-color: #d1fae5;
+            border-color: var(--success);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+
+        .card.incorrect {
+            background-color: #ffe4e6;
+            border-color: var(--error);
+            box-shadow: 0 20px 40px rgba(244, 63, 94, 0.2);
+        }
+
+        /* Pregunta y feedback comparten el mismo espacio dentro de la card */
+        .card-slot {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            place-items: center;
+            position: relative;
+        }
+
+        .question {
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.4;
+            color: var(--primary-dark);
+            text-align: center;
+            /* Ocupa la capa superior del grid */
+            grid-area: 1 / 1;
+            transition: opacity 0.2s ease;
+        }
+
+        .feedback {
+            font-size: 2rem;
+            font-weight: 900;
+            text-align: center;
+            line-height: 1.4;
+            white-space: pre-line;
+            /* Ocupa la misma capa del grid */
+            grid-area: 1 / 1;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Invisible pero sigue ocupando espacio (no colapsa el layout) */
+        .invisible {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .feedback.success-text {
+            color: var(--success-dark);
+        }
+
+        .feedback.error-text {
+            color: var(--error-dark);
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 1.5rem;
+            width: min(600px, 100%);
+        }
+
+        /* Contenedor de altura fija para evitar saltos de layout */
+        .actions-area {
+            width: min(600px, 100%);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        /* Botones 3D */
+        .btn {
+            flex: 1;
+            padding: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 900;
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.12s ease, box-shadow 0.12s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            outline: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-mito {
+            background-color: var(--error);
+            box-shadow: 0 8px 0 var(--error-dark), 0 15px 20px rgba(244, 63, 94, 0.3);
+        }
+        .btn-mito:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 var(--error-dark), 0 5px 10px rgba(244, 63, 94, 0.2);
+        }
+
+        .btn-realidad {
+            background-color: var(--success);
+            box-shadow: 0 8px 0 var(--success-dark), 0 15px 20px rgba(16, 185, 129, 0.3);
+        }
+        .btn-realidad:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 var(--success-dark), 0 5px 10px rgba(16, 185, 129, 0.2);
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            box-shadow: 0 8px 0 var(--primary-dark), 0 15px 20px rgba(166, 66, 125, 0.3);
+            width: 100%;
+            max-width: 400px;
+            margin-top: 1rem;
+            border-radius: 50px;
+        }
+        .btn-start:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 var(--primary-dark), 0 5px 10px rgba(166, 66, 125, 0.2);
+        }
+
+        /* Botón siguiente pregunta */
+        .btn-next {
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            box-shadow: 0 8px 0 var(--primary-dark), 0 15px 20px rgba(166, 66, 125, 0.3);
+            width: 100%;
+            max-width: 600px;
+            margin-top: 1rem;
+            border-radius: 20px;
+            font-size: 1.3rem;
+            padding: 1.4rem;
+        }
+        .btn-next:active {
+            transform: translateY(8px);
+            box-shadow: 0 0px 0 var(--primary-dark), 0 5px 10px rgba(166, 66, 125, 0.2);
+        }
+
+        #qr-container img {
+            width: 220px;
+            height: 220px;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            border: 4px solid var(--secondary);
+            box-shadow: 0 10px 20px rgba(166, 66, 125, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        #qr-container img:hover {
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .progress-text {
+            color: var(--secondary-dark);
+            font-size: 1.2rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.6);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+        <!-- HEADER LOGO FIJO -->
+        <div class="header-logo">
+            <img src="logo-gmet.png" alt="GMET Logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x80/fadceb/a6427d?text=GMET';">
+        </div>
+
+        <!-- PANTALLA INICIO -->
+        <div id="view-start">
+            <h1>Bienvenida al Desafío</h1>
+            <p class="subtitle">¿Mito o Realidad? Poné a prueba lo que sabés sobre las mujeres en la tecnología.</p>
+            <button class="btn btn-start" onclick="startGame()">TOCÁ PARA EMPEZAR</button>
+        </div>
+
+        <!-- PANTALLA JUEGO -->
+        <div id="view-game" class="hidden">
+            <div id="progress" class="progress-text">Pregunta 1/5</div>
+            <div id="question-card" class="card">
+                <div class="card-slot">
+                    <p id="question-text" class="question">Cargando...</p>
+                    <p id="feedback-text" class="feedback invisible"></p>
+                </div>
+            </div>
+            <!-- Área de acción fija: alterna entre respuesta y siguiente -->
+            <div class="actions-area">
+                <div id="answer-buttons" class="btn-container">
+                    <button id="btn-mito" class="btn btn-mito" onclick="handleAnswer('mito')">MITO</button>
+                    <button id="btn-realidad" class="btn btn-realidad" onclick="handleAnswer('realidad')">REALIDAD</button>
+                </div>
+                <button id="btn-next" class="btn btn-next hidden" onclick="nextQuestion()">SIGUIENTE ➜</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA FINAL -->
+        <div id="view-result" class="hidden">
+            <h1 id="final-title" style="font-size: 2.5rem;">¡Desafío Completado!</h1>
+            <p id="final-score" style="font-size: 2rem; font-weight: 900; margin-bottom: 1rem; color: var(--primary-dark);">
+            </p>
+            <p class="subtitle" style="margin-bottom: 1rem;">La historia del software la escribimos nosotras. El próximo avance puede ser tuyo. ¡Sumate al laboratorio!</p>
+            <div id="qr-container">
+                <!-- Recordá tener la imagen qr.png en la misma carpeta -->
+                <img src="C:\Users\agust\Downloads\gmet.utn.frlp_qr.png" alt="Escanea para seguir a GMET">
+            </div>
+            <p style="font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 1.5rem;">Escaneá, seguinos en Instagram y reclamá tu premio.</p>
+            <button class="btn btn-start" onclick="resetGame()" style="padding: 1.2rem; font-size: 1.2rem;">VOLVER AL INICIO</button>
+        </div>
+    </div>
+
+    <script>
+        // Banco de 22 preguntas: 14 Realidades, 8 Mitos
+        const questionBank = [
+            // REALIDADES
+            { text: "El primer algoritmo diseñado para ser ejecutado por una máquina fue escrito por una mujer (Ada Lovelace).", type: "realidad" },
+            { text: "El código de navegación que llevó el Apolo 11 a la luna fue liderado por una ingeniera (Margaret Hamilton).", type: "realidad" },
+            { text: "La tecnología precursora del Wi-Fi y Bluetooth fue inventada por una actriz de Hollywood (Hedy Lamarr).", type: "realidad" },
+            { text: "El primer compilador para un lenguaje de programación fue creado por una mujer (Grace Hopper).", type: "realidad" },
+            { text: "El algoritmo fundamental para procesar la primera imagen de un agujero negro fue liderado por una científica (Katie Bouman).", type: "realidad" },
+            { text: "El término 'Ingeniería de Software' fue acuñado por una mujer para darle legitimidad a la disciplina.", type: "realidad" },
+            { text: "Las seis personas que programaron la ENIAC, la primera computadora electrónica de propósito general, eran mujeres.", type: "realidad" },
+            { text: "El protocolo STP (Spanning Tree Protocol), fundamental para el funcionamiento de las redes e Internet, fue inventado por Radia Perlman.", type: "realidad" },
+            { text: "La primera mujer en diseñar y programar videojuegos comercialmente (Carol Shaw) trabajó para Atari en los años 70.", type: "realidad" },
+            { text: "El concepto de 'TF-IDF', la matemática base detrás de cómo los motores de búsqueda encuentran resultados relevantes, fue creado por Karen Spärck Jones.", type: "realidad" },
+            { text: "El primer sistema computarizado de reservas de aerolíneas fue diseñado por una mujer (Evelyn Berezin).", type: "realidad" },
+            { text: "Los iconos originales de la primera interfaz gráfica de Apple Macintosh fueron diseñados por Susan Kare.", type: "realidad" },
+            { text: "La primera persona en ganar el Premio Turing (el 'Nobel' de la computación) por optimización de compiladores fue una mujer (Frances Allen).", type: "realidad" },
+            { text: "El término 'bug' se popularizó en Sistemas cuando una científica encontró una polilla real atrapada en un relé electromecánico.", type: "realidad" },
+
+            // MITOS
+            { text: "Las mujeres en sistemas solo se dedican al diseño web y UX/UI.", type: "mito" },
+            { text: "En los años 60, programar computadoras era considerado un trabajo de alto estatus exclusivo para hombres.", type: "mito" }, // Era visto como trabajo clerical de mujeres.
+            { text: "Actualmente, las mujeres ocupan más del 50% de los roles de Ingeniería de Software a nivel global.", type: "mito" }, // Es menos del 30%.
+            { text: "Las mujeres representan el 40% de quienes contribuyen a proyectos de código abierto (Open Source) en GitHub.", type: "mito" }, // Es menos del 10%.
+            { text: "El equipo que descifró la máquina Enigma con Alan Turing durante la Segunda Guerra Mundial estaba compuesto 100% por hombres.", type: "mito" }, // Había miles de mujeres, incluyendo a Joan Clarke.
+            { text: "La primera computadora personal de escritorio (LINC) fue diseñada y probada exclusivamente por ingenieros hombres.", type: "mito" }, // Mary Allen Wilkes la armó y probó en su casa.
+            { text: "El lenguaje de programación C++ fue creado por una mujer.", type: "mito" }, // Fue creado por Bjarne Stroustrup.
+            { text: "Ada Lovelace y Alan Turing trabajaron juntos en el primer diseño teórico de una computadora.", type: "mito" } // Vivieron en siglos diferentes.
+        ];
+
+        const QUESTIONS_PER_GAME = 5;
+        let gameQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+
+        function shuffle(array) {
+            return array.sort(() => Math.random() - 0.5);
+        }
+
+        function startGame() {
+            // Seleccionar 5 preguntas al azar del banco
+            gameQuestions = shuffle([...questionBank]).slice(0, QUESTIONS_PER_GAME);
+            currentIndex = 0;
+            score = 0;
+
+            document.getElementById('view-start').classList.add('hidden');
+            document.getElementById('view-game').classList.remove('hidden');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            document.getElementById('progress').innerText = `Pregunta ${currentIndex + 1} de ${QUESTIONS_PER_GAME}`;
+
+            // Limpiar UI - usar 'invisible' para no mover el layout
+            const card = document.getElementById('question-card');
+            card.className = 'card';
+
+            const qText = document.getElementById('question-text');
+            const fText = document.getElementById('feedback-text');
+            qText.innerText = gameQuestions[currentIndex].text;
+            qText.classList.remove('invisible');
+            fText.className = 'feedback invisible';
+
+            // Mostrar botones de respuesta, ocultar botón siguiente
+            document.getElementById('answer-buttons').classList.remove('hidden');
+            document.getElementById('btn-next').classList.add('hidden');
+        }
+
+        function handleAnswer(answer) {
+            const currentQ = gameQuestions[currentIndex];
+            const isCorrect = (answer === currentQ.type);
+
+            if (isCorrect) score++;
+
+            // Intercambiar pregunta ↔ feedback sin mover el layout
+            const card = document.getElementById('question-card');
+            const qText = document.getElementById('question-text');
+            const fText = document.getElementById('feedback-text');
+
+            qText.classList.add('invisible');
+            fText.classList.remove('invisible');
+
+            if (isCorrect) {
+                card.classList.add('correct');
+                fText.className = 'feedback success-text';
+                fText.innerText = '¡CORRECTO! ✓';
+            } else {
+                card.classList.add('incorrect');
+                fText.className = 'feedback error-text';
+                fText.innerText = `¡INCORRECTO! ✕\nEra ${currentQ.type.toUpperCase()}`;
+            }
+
+            // Ocultar botones de respuesta y mostrar "Siguiente"
+            document.getElementById('answer-buttons').classList.add('hidden');
+            const btnNext = document.getElementById('btn-next');
+            const isLast = (currentIndex + 1 >= QUESTIONS_PER_GAME);
+            btnNext.innerText = isLast ? 'VER RESULTADO ★' : 'SIGUIENTE ➜';
+            btnNext.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            if (currentIndex < QUESTIONS_PER_GAME) {
+                showQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById('view-game').classList.add('hidden');
+            document.getElementById('view-result').classList.remove('hidden');
+
+            document.getElementById('final-score').innerText = `Acertaste ${score} de ${QUESTIONS_PER_GAME}`;
+        }
+
+        function resetGame() {
+            document.getElementById('view-result').classList.add('hidden');
+            document.getElementById('view-start').classList.remove('hidden');
+        }
+    </script>
+</body>
+
+</html>
