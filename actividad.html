@@ -9,9 +9,11 @@
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #fff0f6 0%, #fbcfe8 100%);
-            --primary: #a6427d; /* GMET oscuro */
+            --primary: #a6427d;
+            /* GMET oscuro */
             --primary-dark: #831843;
-            --secondary: #df7ab3; /* GMET claro */
+            --secondary: #df7ab3;
+            /* GMET claro */
             --secondary-dark: #be185d;
             --text: #4a1d37;
             --card-bg: rgba(255, 255, 255, 0.85);
@@ -45,43 +47,68 @@
             align-items: center;
             justify-content: center;
             padding: 2rem;
-            padding-top: 11rem; /* Margen para asegurar que el contenido no pise al logo */
+            padding-top: 18rem;
+            /* Margen agrandado para que entre el logo y el texto nuevo sin pisar la tarjeta */
             text-align: center;
             position: relative;
         }
 
         /* Contenedores de vista centran todo su contenido */
-        #view-start, #view-game, #view-result {
+        #view-start,
+        #view-game,
+        #view-result {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
         }
 
-        /* Logo Fijo Arriba */
+        /* ========================================= */
+        /* LOGO FIJO Y TEXTO NUEVO */
+        /* ========================================= */
         .header-logo {
             position: absolute;
-            top: 2.5rem;
+            top: 2rem;
             left: 50%;
             transform: translateX(-50%);
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             width: 100%;
+            z-index: 10;
         }
-        
+
         .header-logo img {
-            height: 150px; /* Tamaño mucho más grande */
+            height: 180px;
             width: auto;
-            /* Como no tiene fondo, este sombreado ahora recorta la silueta exacta del texto y la lupa */
             filter: drop-shadow(0 10px 15px rgba(166, 66, 125, 0.3));
         }
+
+        /* Estilo específico para que el texto sea idéntico a la foto */
+        .logo-text {
+            color: var(--primary);
+            /* El rosa de GMET */
+            font-size: 1.2rem;
+            /* Tamaño bien visible */
+            font-weight: 900;
+            /* Letra bien gruesa */
+            text-transform: uppercase;
+            /* Todo en mayúsculas */
+            letter-spacing: 0.5px;
+            margin-top: -3.5rem;
+            /* Separación de la imagen */
+            text-align: center;
+        }
+
+        /* ========================================= */
 
         h1 {
             font-size: 3rem;
             font-weight: 900;
             margin-bottom: 1rem;
             color: var(--primary);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
         }
 
         .subtitle {
@@ -99,13 +126,11 @@
             border-radius: 24px;
             padding: 2.5rem 2.5rem;
             margin: 1rem 0;
-            /* Tamaño 100% fijo: nunca cambia, sin importar el contenido */
             width: min(600px, 100%);
             height: 260px;
-            box-shadow: 0 20px 40px rgba(166, 66, 125, 0.1), inset 0 0 0 1px rgba(255,255,255,0.5);
+            box-shadow: 0 20px 40px rgba(166, 66, 125, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
             backdrop-filter: blur(10px);
             transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-            /* Centra el contenido verticalmente */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -125,7 +150,6 @@
             box-shadow: 0 20px 40px rgba(244, 63, 94, 0.2);
         }
 
-        /* Pregunta y feedback comparten el mismo espacio dentro de la card */
         .card-slot {
             width: 100%;
             height: 100%;
@@ -140,7 +164,6 @@
             line-height: 1.4;
             color: var(--primary-dark);
             text-align: center;
-            /* Ocupa la capa superior del grid */
             grid-area: 1 / 1;
             transition: opacity 0.2s ease;
         }
@@ -151,12 +174,10 @@
             text-align: center;
             line-height: 1.4;
             white-space: pre-line;
-            /* Ocupa la misma capa del grid */
             grid-area: 1 / 1;
             transition: opacity 0.2s ease;
         }
 
-        /* Invisible pero sigue ocupando espacio (no colapsa el layout) */
         .invisible {
             opacity: 0;
             pointer-events: none;
@@ -176,7 +197,6 @@
             width: min(600px, 100%);
         }
 
-        /* Contenedor de altura fija para evitar saltos de layout */
         .actions-area {
             width: min(600px, 100%);
             height: 100px;
@@ -186,7 +206,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Botones 3D */
         .btn {
             flex: 1;
             padding: 1.5rem;
@@ -207,6 +226,7 @@
             background-color: var(--error);
             box-shadow: 0 8px 0 var(--error-dark), 0 15px 20px rgba(244, 63, 94, 0.3);
         }
+
         .btn-mito:active {
             transform: translateY(8px);
             box-shadow: 0 0px 0 var(--error-dark), 0 5px 10px rgba(244, 63, 94, 0.2);
@@ -216,6 +236,7 @@
             background-color: var(--success);
             box-shadow: 0 8px 0 var(--success-dark), 0 15px 20px rgba(16, 185, 129, 0.3);
         }
+
         .btn-realidad:active {
             transform: translateY(8px);
             box-shadow: 0 0px 0 var(--success-dark), 0 5px 10px rgba(16, 185, 129, 0.2);
@@ -229,12 +250,12 @@
             margin-top: 1rem;
             border-radius: 50px;
         }
+
         .btn-start:active {
             transform: translateY(8px);
             box-shadow: 0 0px 0 var(--primary-dark), 0 5px 10px rgba(166, 66, 125, 0.2);
         }
 
-        /* Botón siguiente pregunta */
         .btn-next {
             background: linear-gradient(135deg, var(--secondary), var(--primary));
             box-shadow: 0 8px 0 var(--primary-dark), 0 15px 20px rgba(166, 66, 125, 0.3);
@@ -245,6 +266,7 @@
             font-size: 1.3rem;
             padding: 1.4rem;
         }
+
         .btn-next:active {
             transform: translateY(8px);
             box-shadow: 0 0px 0 var(--primary-dark), 0 5px 10px rgba(166, 66, 125, 0.2);
@@ -272,10 +294,10 @@
             color: var(--secondary-dark);
             font-size: 1.2rem;
             font-weight: 700;
-            background: rgba(255,255,255,0.6);
+            background: rgba(255, 255, 255, 0.6);
             padding: 0.5rem 1.5rem;
             border-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
         }
     </style>
 </head>
@@ -285,7 +307,9 @@
     <div id="app">
         <!-- HEADER LOGO FIJO -->
         <div class="header-logo">
-            <img src="img/logo-gmet.png" alt="GMET Logo" onerror="this.onerror=null; this.src='https://via.placeholder.com/200x80/fadceb/a6427d?text=GMET';">
+            <img src="img/logo-gmet.png" alt="GMET Logo"
+                onerror="this.onerror=null; this.src='https://via.placeholder.com/200x80/fadceb/a6427d?text=GMET';">
+            <div class="logo-text">GIDAS MUJERES EN TECNOLOGÍA</div>
         </div>
 
         <!-- PANTALLA INICIO -->
@@ -308,7 +332,8 @@
             <div class="actions-area">
                 <div id="answer-buttons" class="btn-container">
                     <button id="btn-mito" class="btn btn-mito" onclick="handleAnswer('mito')">MITO</button>
-                    <button id="btn-realidad" class="btn btn-realidad" onclick="handleAnswer('realidad')">REALIDAD</button>
+                    <button id="btn-realidad" class="btn btn-realidad"
+                        onclick="handleAnswer('realidad')">REALIDAD</button>
                 </div>
                 <button id="btn-next" class="btn btn-next hidden" onclick="nextQuestion()">SIGUIENTE ➜</button>
             </div>
@@ -317,46 +342,97 @@
         <!-- PANTALLA FINAL -->
         <div id="view-result" class="hidden">
             <h1 id="final-title" style="font-size: 2.5rem;">¡Desafío Completado!</h1>
-            <p id="final-score" style="font-size: 2rem; font-weight: 900; margin-bottom: 1rem; color: var(--primary-dark);">
+            <p id="final-score"
+                style="font-size: 2rem; font-weight: 900; margin-bottom: 1rem; color: var(--primary-dark);">
             </p>
-            <p class="subtitle" style="margin-bottom: 1rem;">La historia del software la escribimos nosotras. El próximo avance puede ser tuyo. ¡Sumate al laboratorio!</p>
+            <p class="subtitle" style="margin-bottom: 1rem;">La historia del software la escribimos nosotras. El próximo
+                avance puede ser tuyo. ¡Sumate al laboratorio!</p>
             <div id="qr-container">
                 <!-- Recordá tener la imagen qr.png en la misma carpeta -->
                 <img src="img/gmet.utn.frlp_qr.png" alt="Escanea para seguir a GMET">
             </div>
-            <p style="font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 1.5rem;">Escaneá, seguinos en Instagram y reclamá tu premio.</p>
-            <button class="btn btn-start" onclick="resetGame()" style="padding: 1.2rem; font-size: 1.2rem;">VOLVER AL INICIO</button>
+            <p style="font-size: 1.1rem; color: var(--primary); font-weight: 700; margin-bottom: 1.5rem;">Escaneá,
+                seguinos en Instagram y reclamá tu premio.</p>
+            <button class="btn btn-start" onclick="resetGame()" style="padding: 1.2rem; font-size: 1.2rem;">VOLVER AL
+                INICIO</button>
         </div>
     </div>
 
     <script>
-        // Banco de 22 preguntas: 14 Realidades, 8 Mitos
+        // Banco gigante de 55 preguntas (Historia, Arte, Cine, Datos)
         const questionBank = [
-            // REALIDADES
-            { text: "El primer algoritmo diseñado para ser ejecutado por una máquina fue escrito por una mujer (Ada Lovelace).", type: "realidad" },
-            { text: "El código de navegación que llevó el Apolo 11 a la luna fue liderado por una ingeniera (Margaret Hamilton).", type: "realidad" },
-            { text: "La tecnología precursora del Wi-Fi y Bluetooth fue inventada por una actriz de Hollywood (Hedy Lamarr).", type: "realidad" },
-            { text: "El primer compilador para un lenguaje de programación fue creado por una mujer (Grace Hopper).", type: "realidad" },
-            { text: "El algoritmo fundamental para procesar la primera imagen de un agujero negro fue liderado por una científica (Katie Bouman).", type: "realidad" },
-            { text: "El término 'Ingeniería de Software' fue acuñado por una mujer para darle legitimidad a la disciplina.", type: "realidad" },
-            { text: "Las seis personas que programaron la ENIAC, la primera computadora electrónica de propósito general, eran mujeres.", type: "realidad" },
-            { text: "El protocolo STP (Spanning Tree Protocol), fundamental para el funcionamiento de las redes e Internet, fue inventado por Radia Perlman.", type: "realidad" },
-            { text: "La primera mujer en diseñar y programar videojuegos comercialmente (Carol Shaw) trabajó para Atari en los años 70.", type: "realidad" },
-            { text: "El concepto de 'TF-IDF', la matemática base detrás de cómo los motores de búsqueda encuentran resultados relevantes, fue creado por Karen Spärck Jones.", type: "realidad" },
-            { text: "El primer sistema computarizado de reservas de aerolíneas fue diseñado por una mujer (Evelyn Berezin).", type: "realidad" },
-            { text: "Los iconos originales de la primera interfaz gráfica de Apple Macintosh fueron diseñados por Susan Kare.", type: "realidad" },
-            { text: "La primera persona en ganar el Premio Turing (el 'Nobel' de la computación) por optimización de compiladores fue una mujer (Frances Allen).", type: "realidad" },
-            { text: "El término 'bug' se popularizó en Sistemas cuando una científica encontró una polilla real atrapada en un relé electromecánico.", type: "realidad" },
+            // ==========================================
+            // REALIDADES 
+            // ==========================================
 
+            // Cine, Arte y Cultura Pop
+            { text: "El personaje de Shuri en Black Panther no es pura fantasía; los directores se inspiraron en ingenieras reales que hoy lideran laboratorios de nanotecnología.", type: "realidad" },
+            { text: "Más del 60% de las mujeres que hoy trabajan en ciencias afirman que su interés por la tecnología comenzó inspiradas por el personaje de Dana Scully de Los Expedientes Secretos X.", type: "realidad" },
+            { text: "Para la película The Matrix, las directoras exigieron que el personaje de Trinity utilizara la herramienta de hackeo real 'nmap' en pantalla, en lugar de código inventado.", type: "realidad" },
+            { text: "En la serie The Big Bang Theory, tuvieron que cambiar los guiones porque la actriz que interpreta a Amy Farrah Fowler ya tenía un doctorado real en neurociencia.", type: "realidad" },
+            { text: "En Jurassic Park (1993), la persona que logra reiniciar el sistema operativo del parque y salva a todos de los dinosaurios es una niña, no el ingeniero experto.", type: "realidad" },
+            { text: "Marie Curie sigue siendo, a día de hoy, la única persona en la historia de la humanidad en haber ganado dos Premios Nobel en disciplinas científicas distintas.", type: "realidad" },
+            { text: "A principios del siglo XX, una científica ganadora del Nobel guardaba tubos de ensayo con material radiactivo en sus bolsillos simplemente porque le gustaba cómo brillaban.", type: "realidad" },
+            { text: "La primera persona en la historia en documentar que los animales fabrican y usan herramientas no fue un biólogo de Harvard, sino una investigadora sin título universitario (Jane Goodall).", type: "realidad" },
+            { text: "La persona que inspiró a la protagonista de la película 'Contact' fue una astrónoma real que dedicó su vida a buscar señales de radio extraterrestres.", type: "realidad" },
+            { text: "En los años 50, una matemática negra tuvo que ir a juicio y pedirle un permiso especial a un juez estatal para poder cursar ingeniería en una escuela exclusiva para blancos.", type: "realidad" },
+            { text: "Gracias a la presión generada por la película 'Figuras Ocultas' en 2020, la NASA tuvo que renombrar su sede principal en Washington con el nombre de una ingeniera negra.", type: "realidad" },
+            { text: "El concepto de cambiar constantemente de canal para evitar ser rastreado (la base del actual Bluetooth) se inspiró en el funcionamiento mecánico de las 88 teclas de un piano.", type: "realidad" },
+            { text: "El uso del 'Auto-Tune' en la música no nació de un ingeniero de sonido, sino que fue utilizado por primera vez por la cantante pop Cher como una herramienta de estética digital.", type: "realidad" },
+            { text: "La primera aplicación (App) móvil comprada para ser exhibida como arte permanente en el Museo de Arte Moderno (MoMA) fue un álbum musical de la cantante Björk.", type: "realidad" },
+            { text: "La primera película animada 100% digital (Toy Story) estuvo a punto de ser borrada por error, y se salvó porque una directora técnica se había llevado una copia a su casa.", type: "realidad" },
+            { text: "La cantante Lady Gaga cuenta con un equipo de ingenieros tecnológicos que programan código fuente exclusivamente para controlar los motores y luces de sus vestidos.", type: "realidad" },
+
+            // Historia Tech
+            { text: "El primer algoritmo pensado para ser ejecutado por una máquina no fue escrito por un ingeniero moderno, sino por una condesa de la época victoriana.", type: "realidad" },
+            { text: "El código de software que evitó que el Apolo 11 se estrellara contra la Luna fue liderado y diseñado por una ingeniera.", type: "realidad" },
+            { text: "La tecnología de comunicación en la que se basan el Wi-Fi y el GPS fue inventada en los años 40 por una estrella de cine de Hollywood.", type: "realidad" },
+            { text: "El término informático 'bug' (bicho) se hizo popular cuando una científica tuvo que sacar literalmente una polilla muerta de los circuitos de una computadora gigante.", type: "realidad" },
+            { text: "Las primeras personas en programar la supercomputadora ENIAC fueron seis mujeres, mientras que los hombres solo se encargaban de conectar los cables físicos.", type: "realidad" },
+            { text: "El protocolo fundamental (STP) que evita que las rutas de Internet colapsen en un bucle infinito fue inventado por una ingeniera.", type: "realidad" },
+            { text: "Durante los primeros años de la informática, programar computadoras era considerado un 'trabajo de mujeres', similar a ser operadora telefónica.", type: "realidad" },
+            { text: "Durante la Segunda Guerra Mundial, el equipo británico que descifró los códigos nazis estaba conformado por miles de mujeres matemáticas y calculistas ocultas.", type: "realidad" },
+
+            // Datos y Estadísticas Reales
+            { text: "A pesar de vivir en la era digital, actualmente menos del 30% de los puestos en la industria tecnológica mundial son ocupados por mujeres.", type: "realidad" },
+            { text: "El porcentaje de mujeres trabajando en empresas de tecnología disminuye drásticamente a medida que se asciende a los puestos gerenciales y de liderazgo.", type: "realidad" },
+            { text: "Estadísticamente, las mujeres abandonan las carreras universitarias STEM (Ciencia y Tecnología) en mucha mayor proporción que sus compañeros varones.", type: "realidad" },
+            { text: "Múltiples estudios corporativos demuestran que los equipos de desarrollo de software con diversidad de género logran mayor innovación técnica y económica.", type: "realidad" },
+            { text: "A nivel mundial, en los equipos encargados de desarrollar las futuras Inteligencias Artificiales, menos de 1 de cada 4 especialistas es mujer.", type: "realidad" },
+            { text: "La cantidad de mujeres estudiando informática en occidente sufrió una caída drástica e inexplicable exactamente a partir del año 1984.", type: "realidad" },
+
+            // ==========================================
             // MITOS
-            { text: "Las mujeres en sistemas solo se dedican al diseño web y UX/UI.", type: "mito" },
-            { text: "En los años 60, programar computadoras era considerado un trabajo de alto estatus exclusivo para hombres.", type: "mito" }, // Era visto como trabajo clerical de mujeres.
-            { text: "Actualmente, las mujeres ocupan más del 50% de los roles de Ingeniería de Software a nivel global.", type: "mito" }, // Es menos del 30%.
-            { text: "Las mujeres representan el 40% de quienes contribuyen a proyectos de código abierto (Open Source) en GitHub.", type: "mito" }, // Es menos del 10%.
-            { text: "El equipo que descifró la máquina Enigma con Alan Turing durante la Segunda Guerra Mundial estaba compuesto 100% por hombres.", type: "mito" }, // Había miles de mujeres, incluyendo a Joan Clarke.
-            { text: "La primera computadora personal de escritorio (LINC) fue diseñada y probada exclusivamente por ingenieros hombres.", type: "mito" }, // Mary Allen Wilkes la armó y probó en su casa.
-            { text: "El lenguaje de programación C++ fue creado por una mujer.", type: "mito" }, // Fue creado por Bjarne Stroustrup.
-            { text: "Ada Lovelace y Alan Turing trabajaron juntos en el primer diseño teórico de una computadora.", type: "mito" } // Vivieron en siglos diferentes.
+            // ==========================================
+
+            // Cine y Arte
+            { text: "En los años 60, los protocolos de la NASA prohibían terminantemente que las mujeres usaran o programaran las costosas supercomputadoras de IBM.", type: "mito" },
+            { text: "En la película 'The Net' (1995), el personaje de Sandra Bullock es una rareza de Hollywood, ya que en esa época casi no había mujeres analistas de sistemas.", type: "mito" },
+            { text: "El primer navegador web con interfaz gráfica de la historia fue programado en un garaje por dos estudiantes universitarias de California.", type: "mito" },
+            { text: "Antes de irse a investigar chimpancés a África, Jane Goodall tuvo que completar tres doctorados en biología para que la comunidad científica financiara su expedición.", type: "mito" },
+            { text: "La tecnología de radio precursora del Wi-Fi fue descubierta accidentalmente por una actriz mientras intentaba formular un sistema de luces para estudios de cine.", type: "mito" },
+            { text: "La actriz Hedy Lamarr nunca pudo patentar su sistema de comunicaciones porque los ingenieros del ejército no tomaban en serio los inventos de una mujer.", type: "mito" },
+            { text: "El algoritmo base para entrenar a las inteligencias artificiales que componen música hoy en día fue alimentado exclusivamente con partituras creadas por hombres.", type: "mito" },
+            { text: "El clásico código de barras que usamos en los supermercados nació luego de que un ingeniero intentara automatizar la lectura de partituras de piano.", type: "mito" },
+            { text: "La popular serie Black Mirror basa sus guiones en teorías de tecnología ficción que son físicamente imposibles de replicar en la vida real.", type: "mito" },
+            { text: "El lenguaje de programación 'Python', líder en ciencia de datos, fue bautizado así por una bióloga matemática intentando modelar el movimiento de las serpientes.", type: "mito" },
+
+            // Historia Tech y Datos
+            { text: "Debido a que era una carrera del futuro, en los años 60 la programación de software era considerada un trabajo de alto estatus exclusivo para hombres.", type: "mito" },
+            { text: "Actualmente, gracias a las políticas de inclusión impulsadas desde el año 2010, las mujeres ocupan más del 50% de los roles de Ingeniería de Software a nivel global.", type: "mito" },
+            { text: "En el mayor repositorio de código del mundo (GitHub), las mujeres representan hoy cerca del 40% de quienes contribuyen a proyectos de código abierto.", type: "mito" },
+            { text: "El equipo militar de élite que descifró los códigos de la máquina Enigma junto a Alan Turing estaba compuesto al 100% por oficiales masculinos.", type: "mito" },
+            { text: "La primera computadora personal de escritorio diseñada en los años 60 (LINC) fue ensamblada y probada bajo estricta confidencialidad por ingenieros hombres.", type: "mito" },
+            { text: "El poderoso y complejo lenguaje de programación C++, utilizado para crear motores de videojuegos y sistemas operativos, fue creado por una mujer.", type: "mito" },
+            { text: "La Condesa Ada Lovelace y el matemático Alan Turing trabajaron juntos durante dos años en el primer diseño teórico de lo que sería una computadora.", type: "mito" },
+            { text: "El primer compilador de software de la historia (el traductor entre humano y máquina) fue desarrollado en los años 70 por un equipo exclusivamente masculino.", type: "mito" },
+            { text: "El paradigma de la 'Programación Orientada a Objetos', estándar de la industria actual, fue inventado en sus orígenes sin ninguna participación femenina.", type: "mito" },
+            { text: "Debido al sesgo de la época, ninguna mujer ha logrado hasta el día de hoy ganar el Premio Turing, considerado el 'Premio Nobel' de la informática.", type: "mito" },
+            { text: "El código fuente de vuelo de las históricas misiones Apolo fue tercerizado y comprado a una empresa privada de software liderada por empresarios.", type: "mito" },
+            { text: "Debido al fomento en la escuela secundaria, en Argentina las mujeres ya representan más del 70% del estudiantado ingresante en la carrera de Ingeniería en Sistemas.", type: "mito" },
+            { text: "En las grandes corporaciones de Silicon Valley, la brecha salarial (diferencia de sueldo por el mismo trabajo) en perfiles de tecnología ya no existe.", type: "mito" },
+            { text: "La mayoría de los asistentes virtuales del mercado (como Alexa o Siri) tienen voces femeninas por pura casualidad durante las pruebas de frecuencia de los micrófonos.", type: "mito" },
+            { text: "La informática siempre fue, desde la creación de la primera computadora de válvulas, un ámbito académico dominado exclusivamente por hombres.", type: "mito" }
         ];
 
         const QUESTIONS_PER_GAME = 5;
@@ -365,7 +441,13 @@
         let score = 0;
 
         function shuffle(array) {
-            return array.sort(() => Math.random() - 0.5);
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex !== 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
         }
 
         function startGame() {
