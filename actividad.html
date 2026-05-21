@@ -359,10 +359,10 @@
     </div>
 
     <script>
-        // Banco gigante de 55 preguntas (Historia, Arte, Cine, Datos)
+        // Banco de 95+ preguntas sobre mujeres en tech/STEM
         const questionBank = [
             // ==========================================
-            // REALIDADES 
+            // ===== PREGUNTAS ORIGINALES: REALIDADES ===== 
             // ==========================================
 
             // Cine, Arte y Cultura Pop
@@ -401,38 +401,99 @@
             { text: "A nivel mundial, en los equipos encargados de desarrollar las futuras Inteligencias Artificiales, menos de 1 de cada 4 especialistas es mujer.", type: "realidad" },
             { text: "La cantidad de mujeres estudiando informática en occidente sufrió una caída drástica e inexplicable exactamente a partir del año 1984.", type: "realidad" },
 
-            // ==========================================
-            // MITOS
-            // ==========================================
+            // ===== PREGUNTAS ORIGINALES: MITOS =====
+            { text: "Las mujeres en sistemas solo se dedican al diseño web y UX/UI.", type: "mito" },
+            { text: "En los años 60, programar computadoras era considerado un trabajo de alto estatus exclusivo para hombres.", type: "mito" },
+            { text: "Actualmente, las mujeres ocupan más del 50% de los roles de Ingeniería de Software a nivel global.", type: "mito" },
+            { text: "Las mujeres representan el 40% de quienes contribuyen a proyectos de código abierto (Open Source) en GitHub.", type: "mito" },
+            { text: "El equipo que descifró la máquina Enigma con Alan Turing durante la Segunda Guerra Mundial estaba compuesto 100% por hombres.", type: "mito" },
+            { text: "La primera computadora personal de escritorio (LINC) fue diseñada y probada exclusivamente por ingenieros hombres.", type: "mito" },
+            { text: "El lenguaje de programación C++ fue creado por una mujer.", type: "mito" },
+            { text: "Ada Lovelace y Alan Turing trabajaron juntos en el primer diseño teórico de una computadora.", type: "mito" },
 
-            // Cine y Arte
-            { text: "En los años 60, los protocolos de la NASA prohibían terminantemente que las mujeres usaran o programaran las costosas supercomputadoras de IBM.", type: "mito" },
-            { text: "En la película 'The Net' (1995), el personaje de Sandra Bullock es una rareza de Hollywood, ya que en esa época casi no había mujeres analistas de sistemas.", type: "mito" },
-            { text: "El primer navegador web con interfaz gráfica de la historia fue programado en un garaje por dos estudiantes universitarias de California.", type: "mito" },
-            { text: "Antes de irse a investigar chimpancés a África, Jane Goodall tuvo que completar tres doctorados en biología para que la comunidad científica financiara su expedición.", type: "mito" },
-            { text: "La tecnología de radio precursora del Wi-Fi fue descubierta accidentalmente por una actriz mientras intentaba formular un sistema de luces para estudios de cine.", type: "mito" },
-            { text: "La actriz Hedy Lamarr nunca pudo patentar su sistema de comunicaciones porque los ingenieros del ejército no tomaban en serio los inventos de una mujer.", type: "mito" },
-            { text: "El algoritmo base para entrenar a las inteligencias artificiales que componen música hoy en día fue alimentado exclusivamente con partituras creadas por hombres.", type: "mito" },
-            { text: "El clásico código de barras que usamos en los supermercados nació luego de que un ingeniero intentara automatizar la lectura de partituras de piano.", type: "mito" },
-            { text: "La popular serie Black Mirror basa sus guiones en teorías de tecnología ficción que son físicamente imposibles de replicar en la vida real.", type: "mito" },
-            { text: "El lenguaje de programación 'Python', líder en ciencia de datos, fue bautizado así por una bióloga matemática intentando modelar el movimiento de las serpientes.", type: "mito" },
+            // ===== NUEVAS PREGUNTAS: CINE Y SERIES - REALIDADES =====
+            { text: "El personaje de Shuri en Black Panther está inspirado en ingenieras reales que lideran laboratorios de nanotecnología.", type: "realidad" },
+            { text: "La película Talentos Ocultos muestra que Katherine Johnson y su equipo fueron las primeras en aprender a programar las computadoras IBM de la NASA en los años 60.", type: "realidad" },
+            { text: "En los años 80 y 90, la presencia femenina en carreras de sistemas era porcentualmente más alta que hoy en día.", type: "realidad" },
+            { text: "El 'Efecto Scully' es un fenómeno real donde un estudio demostró que el 63% de las mujeres en STEM consideran a Dana Scully como su modelo a seguir.", type: "realidad" },
+            { text: "El personaje de Trinity en The Matrix utiliza un comando de hacking real llamado 'nmap' en la película.", type: "realidad" },
+            { text: "La serie Halt and Catch Fire se basa en el hecho real de que muchas mujeres lideraron el diseño de interfaces y la conectividad en los inicios de internet.", type: "realidad" },
+            { text: "La actriz que interpreta a Amy Farrah Fowler en The Big Bang Theory (Mayim Bialik) es realmente neurocientífica con un doctorado.", type: "realidad" },
+            { text: "En Jurassic Park, es una niña (Lex Murphy) quien salva a todos gracias a sus conocimientos en sistemas operativos.", type: "realidad" },
+            { text: "En la película Ágora, Hipatia de Alejandría es mostrada como una mujer que estudiaba el movimiento de los planetas hace siglos.", type: "realidad" },
+            { text: "Marie Curie es la única persona en la historia en haber ganado dos Premios Nobel en disciplinas científicas distintas.", type: "realidad" },
+            { text: "En la película Marie Curie se muestra que ella guardaba tubos de ensayo con radio en sus bolsillos porque brillaban en la oscuridad.", type: "realidad" },
+            { text: "El documental El viaje de Jane explica que Jane Goodall fue la primera persona en descubrir que los animales usan herramientas.", type: "realidad" },
+            { text: "En Gravity, el personaje de Sandra Bullock es una ingeniera médica que debe reparar el telescopio Hubble ella sola.", type: "realidad" },
+            { text: "El personaje de Jodie Foster en Contact está basado en una astrónoma real llamada Jill Tarter.", type: "realidad" },
+            { text: "En Figuras Ocultas, Dorothy Vaughan aprendió a programar las computadoras IBM por su cuenta para no perder su trabajo.", type: "realidad" },
+            { text: "La película Contact sugiere que la tecnología para comunicarnos con extraterrestres se basaría en las matemáticas, un lenguaje universal.", type: "realidad" },
+            { text: "En Figuras Ocultas, Mary Jackson tuvo que pedir un permiso especial al juez para poder estudiar ingeniería en una escuela solo para blancos.", type: "realidad" },
+            { text: "Hedy Lamarr nunca cobró un centavo por su patente de 'salto de frecuencia' (base del Bluetooth).", type: "realidad" },
+            { text: "En Halt and Catch Fire, el personaje de Cameron Howe es una de las primeras en ver el potencial de los videojuegos como una forma de arte.", type: "realidad" },
+            { text: "Donna Clark en Halt and Catch Fire representa a las mujeres que diseñaban el hardware (las piezas físicas) de las computadoras.", type: "realidad" },
+            { text: "La película Figuras Ocultas provocó que la NASA renombrara su sede en Washington como 'Edificio Mary W. Jackson'.", type: "realidad" },
+            { text: "El telescopio espacial que aparece en Contact es un lugar real que las personas pueden visitar (Observatorio de Arecibo).", type: "realidad" },
+            { text: "En Halt and Catch Fire, las protagonistas crean una red social años antes de que existiera Facebook.", type: "realidad" },
+            { text: "Marie Curie es la única mujer que aparece en la famosa fotografía de la Conferencia de Solvay de 1927.", type: "realidad" },
+            { text: "La tecnología de 'salto de frecuencia' de Hedy Lamarr se inspiró en el funcionamiento de las teclas de un piano.", type: "realidad" },
 
-            // Historia Tech y Datos
-            { text: "Debido a que era una carrera del futuro, en los años 60 la programación de software era considerada un trabajo de alto estatus exclusivo para hombres.", type: "mito" },
-            { text: "Actualmente, gracias a las políticas de inclusión impulsadas desde el año 2010, las mujeres ocupan más del 50% de los roles de Ingeniería de Software a nivel global.", type: "mito" },
-            { text: "En el mayor repositorio de código del mundo (GitHub), las mujeres representan hoy cerca del 40% de quienes contribuyen a proyectos de código abierto.", type: "mito" },
-            { text: "El equipo militar de élite que descifró los códigos de la máquina Enigma junto a Alan Turing estaba compuesto al 100% por oficiales masculinos.", type: "mito" },
-            { text: "La primera computadora personal de escritorio diseñada en los años 60 (LINC) fue ensamblada y probada bajo estricta confidencialidad por ingenieros hombres.", type: "mito" },
-            { text: "El poderoso y complejo lenguaje de programación C++, utilizado para crear motores de videojuegos y sistemas operativos, fue creado por una mujer.", type: "mito" },
-            { text: "La Condesa Ada Lovelace y el matemático Alan Turing trabajaron juntos durante dos años en el primer diseño teórico de lo que sería una computadora.", type: "mito" },
-            { text: "El primer compilador de software de la historia (el traductor entre humano y máquina) fue desarrollado en los años 70 por un equipo exclusivamente masculino.", type: "mito" },
-            { text: "El paradigma de la 'Programación Orientada a Objetos', estándar de la industria actual, fue inventado en sus orígenes sin ninguna participación femenina.", type: "mito" },
-            { text: "Debido al sesgo de la época, ninguna mujer ha logrado hasta el día de hoy ganar el Premio Turing, considerado el 'Premio Nobel' de la informática.", type: "mito" },
-            { text: "El código fuente de vuelo de las históricas misiones Apolo fue tercerizado y comprado a una empresa privada de software liderada por empresarios.", type: "mito" },
-            { text: "Debido al fomento en la escuela secundaria, en Argentina las mujeres ya representan más del 70% del estudiantado ingresante en la carrera de Ingeniería en Sistemas.", type: "mito" },
-            { text: "En las grandes corporaciones de Silicon Valley, la brecha salarial (diferencia de sueldo por el mismo trabajo) en perfiles de tecnología ya no existe.", type: "mito" },
-            { text: "La mayoría de los asistentes virtuales del mercado (como Alexa o Siri) tienen voces femeninas por pura casualidad durante las pruebas de frecuencia de los micrófonos.", type: "mito" },
-            { text: "La informática siempre fue, desde la creación de la primera computadora de válvulas, un ámbito académico dominado exclusivamente por hombres.", type: "mito" }
+            // ===== NUEVAS PREGUNTAS: CINE Y SERIES - MITOS =====
+            { text: "La película Talentos Ocultos es pura ficción; en los años 60 las mujeres no tenían permitido usar las computadoras de la NASA.", type: "mito" },
+            { text: "En la película The Net (1995), Sandra Bullock interpreta a una analista de sistemas, un trabajo que en esa época casi no hacían las mujeres.", type: "mito" },
+            { text: "La serie Halt and Catch Fire muestra que el primer navegador web fue creado por una mujer en un garaje.", type: "mito" },
+            { text: "Jane Goodall, protagonista de El viaje de Jane, era una científica con tres doctorados antes de irse a investigar a los chimpancés.", type: "mito" },
+            { text: "Hedy Lamarr era conocida como 'la mujer más bella del mundo', lo que ayudó a que sus inventos fueran aceptados de inmediato por los científicos.", type: "mito" },
+
+            // ===== NUEVAS PREGUNTAS: MÚSICA Y SONIDO DIGITAL - REALIDADES =====
+            { text: "La cantante Cher fue la primera en usar tecnología de procesamiento de voz (Autotune) como un recurso artístico.", type: "realidad" },
+            { text: "El álbum Biophilia de Björk fue la primera aplicación (App) de música comprada por el Museo de Arte Moderno (MoMA).", type: "realidad" },
+            { text: "Los sintetizadores modernos existen gracias a pioneras como Suzanne Ciani, que diseñaba sonidos para publicidad y cine.", type: "realidad" },
+
+            // ===== NUEVAS PREGUNTAS: MÚSICA Y SONIDO DIGITAL - MITOS =====
+            { text: "La Inteligencia Artificial que compone música hoy fue 'entrenada' exclusivamente con canciones de hombres.", type: "mito" },
+
+            // ===== NUEVAS PREGUNTAS: TECNOLOGÍA Y CULTURA POP - REALIDADES =====
+            { text: "La tecnología de 'CGI' para crear personajes como los de Avatar fue perfeccionada por directoras técnicas de efectos visuales.", type: "realidad" },
+            { text: "Lady Gaga ha utilizado vestidos creados con ingeniería robótica y luces LED controladas por código.", type: "realidad" },
+            { text: "Lisa Simpson, en Los Simpson, es considerada un referente que ha impulsado a niñas a interesarse por la computación y el jazz.", type: "realidad" },
+            { text: "La primera película animada digitalmente en su totalidad (Toy Story) se salvó de ser borrada gracias al teletrabajo de una mujer.", type: "realidad" },
+            { text: "Darlene en la serie Mr. Robot escribe código real que podrías copiar y usar en una computadora de verdad.", type: "realidad" },
+
+            // ===== NUEVAS PREGUNTAS: TECNOLOGÍA Y CULTURA POP - MITOS =====
+            { text: "El código de barras que usamos hoy fue una idea que nació de un sistema de lenguaje musical.", type: "mito" },
+            { text: "La serie Black Mirror utiliza tecnologías que no existen ni existirán nunca.", type: "mito" },
+            { text: "El lenguaje de programación 'Python' fue inventado por una mujer.", type: "mito" },
+
+            // ===== NUEVAS PREGUNTAS: HISTORIA - REALIDADES =====
+            { text: "La primera mujer en volar al espacio exterior fue Valentina Tereshkova.", type: "realidad" },
+            { text: "La primera mujer en ganar un Premio Nobel de Física fue Marie Curie en el año 1903.", type: "realidad" },
+            { text: "Adele Goldberg fue clave en el desarrollo de Smalltalk, lenguaje pionero en la programación orientada a objetos.", type: "realidad" },
+            { text: "El 'Institute for Women and Technology' fue fundado por Anita Borg para promover la participación femenina en la tecnología.", type: "realidad" },
+            { text: "Shafi Goldwasser es una científica informática que diseñó algoritmos de seguridad informática que aún se utilizan en la actualidad.", type: "realidad" },
+            { text: "La matemática y criptógrafa británica Joan Clarke contribuyó a la descodificación de los mensajes Enigma durante la WW2.", type: "realidad" },
+            { text: "Menos del 30% de los puestos en tecnología a nivel mundial son ocupados por mujeres.", type: "realidad" },
+            { text: "La primera persona programadora de la historia fue una mujer (Ada Lovelace).", type: "realidad" },
+            { text: "En los primeros años de la informática, programar era considerado un trabajo femenino.", type: "realidad" },
+            { text: "El porcentaje de mujeres en carreras tecnológicas suele disminuir a medida que avanzan los niveles jerárquicos.", type: "realidad" },
+            { text: "Las mujeres abandonan carreras STEM en mayor proporción que los hombres en muchos países.", type: "realidad" },
+            { text: "Los equipos diversos suelen tener mejores resultados en innovación.", type: "realidad" },
+            { text: "La cantidad de mujeres en informática disminuyó después de los años 80.", type: "realidad" },
+            { text: "Una matemática afroamericana (Katherine Johnson) fue clave para calcular trayectorias espaciales de la NASA.", type: "realidad" },
+            { text: "Las mujeres tuvieron un rol fundamental en la Segunda Guerra Mundial descifrando códigos y realizando cálculos.", type: "realidad" },
+            { text: "En muchos países, menos de 1 de cada 4 especialistas en IA son mujeres.", type: "realidad" },
+
+            // ===== NUEVAS PREGUNTAS: HISTORIA - MITOS =====
+            { text: "El primer compilador de software de la historia fue desarrollado en los años 70 por un equipo exclusivamente masculino.", type: "mito" },
+            { text: "La programación orientada a objetos fue inventada sin participación femenina en su lenguaje precursor (Smalltalk).", type: "mito" },
+            { text: "Ninguna mujer ha logrado ganar el Premio Turing, considerado el 'Nobel' de la informática.", type: "mito" },
+            { text: "El código de vuelo de las misiones Apolo fue comprado a una empresa externa de software liderada por hombres.", type: "mito" },
+            { text: "Las mujeres representan más del 70% del estudiantado en Ingeniería en Sistemas.", type: "mito" },
+            { text: "Solo hombres trabajaron en la NASA durante la carrera espacial.", type: "mito" },
+            { text: "La brecha salarial en tecnología ya no existe.", type: "mito" },
+            { text: "Actualmente hay igualdad de género en puestos de liderazgo tecnológico.", type: "mito" },
+            { text: "La mayoría de asistentes virtuales tienen voces femeninas por casualidad.", type: "mito" },
+            { text: "La informática siempre fue un ámbito dominado exclusivamente por hombres.", type: "mito" }
         ];
 
         const QUESTIONS_PER_GAME = 5;
